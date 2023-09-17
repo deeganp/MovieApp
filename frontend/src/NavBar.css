@@ -1,0 +1,24 @@
+/* Style for the navigation links */
+.nav-link {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #333;
+    transition: color 0.3s, background-color 0.3s;
+  }
+  
+  /* Style for the navigation links on hover */
+  .nav-link:hover {
+    color: #fff;
+    background-color: #007bff;
+    border-radius: 5px;
+  }
+  
+  /* Style for the active navigation link */
+  .nav-link.active {
+    color: #fff;
+    background-color: #007bff;
+    border-radius: 5px;
+  }
+  
