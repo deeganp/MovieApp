@@ -22,7 +22,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "start-fe": "export SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
-    "start-be": "cd /mnt/c/Documents\\ and\\ Settings/14138/Desktop/Coding\\ Projects/Capstone/MovieApp/backend && node server.js"
+    "start-be": "cd ../backend && node server.js"
+
   },
   "eslintConfig": {
     "extends": [
