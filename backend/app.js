@@ -20,16 +20,18 @@ const app = express();
 app.use(express.json());
 app.use(morgan("tiny"));
 app.use(cors());
-// app.use(authenticateJWT);
 app.use("/users", userRoutes);
 
 
-// app.use("/users", usersRoutes);
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'Welcome to the API' });
+});
 
 
 
 /** Handle 404 errors -- this matches everything */
 app.use(function (req, res, next) {
+  console.log('Request received for:', req.url);
   return next(new NotFoundError());
 });
 
