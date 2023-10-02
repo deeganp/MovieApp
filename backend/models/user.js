@@ -112,6 +112,33 @@ class User {
       throw new Error('Unable to fetch favorites from the database');
     }
   }
+  async deleteFavoriteMovieName(movieName) {
+    try {
+      
+      // Fetch the latest favorites from the database
+      await this.fetchFavoritesFromDatabase();
+      // Find the index of the movieName in the favorites array
+      const index = this.favorites.indexOf(movieName);
+  
+      // If the movieName is found, remove it from the favorites array
+      if (index !== -1) {
+        this.favorites.splice(index, 1);
+  
+        // Update the database to remove the movieName from the user's favorites
+        const queryString = 'UPDATE users SET favorites = $1 WHERE username = $2';
+        const values = [this.favorites, this.username];
+        await pool.query(queryString, values);
+  
+        return true; // Movie name deleted from favorites successfully
+      } else {
+        throw new Error('Movie name not found in favorites.');
+      }
+    } catch (error) {
+      console.log(error);
+      throw new Error('Unable to delete movie name from favorites');
+    }
+  }
+  
 
   // Close the database connection when done
   closeConnection() {

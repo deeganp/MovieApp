@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Banner from './banner';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -9,6 +9,7 @@ import SignInForm from './signInForm';
 import Favorites from './favorites';
 import { AuthContextProvider } from './AuthContext';
 import MovieAppApi from './api';
+import HomeVid from './homeVid';
 
 
 function App() {
@@ -30,6 +31,9 @@ function App() {
           <NavBar />
           <main>
             <Switch>
+              <Route exact path="/">
+                <HomeVid />
+              </Route>
               <Route exact path="/searchmovies">
                 <SearchMovie SetMovies={handleGetMovies} />
               </Route>

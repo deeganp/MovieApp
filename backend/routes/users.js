@@ -99,4 +99,28 @@ router.post('/favorites/add', async (req, res) => {
   }
 });
 
+// Delete a movie from user favorites (protected route)
+router.delete('/favorites/delete', async (req, res) => {
+  try {
+    // Extract the user's username and movieName from the request body
+    const { username, movieName } = req.body;
+    
+    // Create a new User instance
+    const user = new User(username);
+
+    // Delete the movie from user favorites
+    const deleteResult = await user.deleteFavoriteMovieName(movieName);
+
+    if (deleteResult) {
+      res.status(200).json({ message: 'Movie deleted from favorites' });
+    } else {
+      res.status(500).json({ error: 'Failed to delete movie from favorites' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Failed to delete movie from favorites' });
+  }
+});
+
+
 module.exports = router;

@@ -10,7 +10,6 @@ const Favorites = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const history = useHistory();
-  
 
   useEffect(() => {
     if (user) {
@@ -30,17 +29,32 @@ const Favorites = () => {
       fetchFavorites();
     } else {
       // Handle the case when no user is logged in (e.g., redirect to login)
-      history.push("/");
+      history.push('/');
       setLoading(false);
     }
   }, [user]);
+
+  const handleDeleteFavorite = async (movieName) => {
+    try {
+      const api = new MovieAppApi();
+      await api.deleteFavorite(user, movieName); // Use user.username
+      // Refresh the favorites list after deletion
+      const updatedFavorites = favorites.filter((fav) => fav !== movieName);
+      setFavorites(updatedFavorites);
+    } catch (err) {
+      setError('Failed to delete favorite');
+    }
+  };
 
   return (
     <div>
       <h2>My Favorites</h2>
       <ul className='fav-list'>
         {favorites.map((movieName) => (
-          <li key={movieName} className='fav-item'>{movieName}</li>
+          <li key={movieName} className='fav-item'>
+            {movieName}
+            <button className='delete0' onClick={() => handleDeleteFavorite(movieName)}>Delete</button>
+          </li>
         ))}
       </ul>
     </div>

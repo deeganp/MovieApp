@@ -62,7 +62,19 @@ class MovieAppApi {
       throw new Error('Failed to retrieve user favorites');
     }
   }
-  
+
+  async deleteFavorite(username, movieName) {
+    try {
+      // Make a DELETE request to delete a favorite movie
+      const response = await axios.delete(`${this.apiBase}/users/favorites/delete`, {
+        data: { username, movieName }, // Send username and movieName in the request body
+      });
+      
+      return response.data; // Return result (e.g., success message)
+    } catch (error) {
+      throw new Error('Failed to delete favorite movie');
+    }
+  }
 }
 
 export default MovieAppApi;
