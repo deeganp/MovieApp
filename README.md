@@ -1,6 +1,3 @@
-*WARNING* - The movie database API used to make movie searches is currently down, I have already reached out to the api provider but if the
-service looks like it will not be coming back on, I will be looking to change the API I am using for movie searches. 
-
 api used in this project:  https://rapidapi.com/SAdrian/api/moviesdatabase/
 
 The title of my project is Movie EXP. and the link to where it is deployed is http://movie-exp.surge.sh/.
