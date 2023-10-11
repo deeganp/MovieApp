@@ -5,7 +5,7 @@ PLEASE NOTE: The free instance of Render I am using spins down after some time b
 in addition, on first time to the site, you will have to do a register followed by a sign in, as of right now, register does not also sign you in.
 
 I am consistently making chnages to improve this site, and have some stretch goals such as increasing the amount of movies you can see on a search, 
-adding movie details and streaming availibilty, and improving the user log in expierience. 
+adding movie details and streaming availibilty, and improving the user log in expierience. Also, I would like to update and more tests.
 
 My website searches movies from the Movie Database Api, and allows users to sign up, log in, and save movies to their 'favorites'
 which is accesible from the Favorites tab.
