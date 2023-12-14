@@ -17,7 +17,8 @@ const Favorites = () => {
       const fetchFavorites = async () => {
         try {
           const api = new MovieAppApi();
-          const userFavorites = await api.getFavorites(user); // Use user.username
+          const token = localStorage.getItem('token');
+          const userFavorites = await api.getFavorites(user, token); // Use user.username
           setFavorites(userFavorites);
           setLoading(false);
         } catch (err) {
@@ -53,7 +54,7 @@ const Favorites = () => {
         {favorites.map((movieName) => (
           <li key={movieName} className='fav-item'>
             {movieName}
-            <button className='delete0' onClick={() => handleDeleteFavorite(movieName)}>Delete</button>
+            <button className='delete' onClick={() => handleDeleteFavorite(movieName)}>Delete</button>
           </li>
         ))}
       </ul>

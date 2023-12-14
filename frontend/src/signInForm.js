@@ -1,27 +1,45 @@
 import React, { useState } from 'react';
 import { useAuth } from './AuthContext';
-import './signInForm.css';
+import './signInForm.css'
 
 
-const SignInForm = ({api, error} ) => {
+const SignInForm = ({ api, error, setAuthenticated  }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useAuth();
 
-  const handleLogin = async(e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Call the sign-in function and pass the username and password
-   const res = await api.loginUser(username, password); 
-   login(res.userObject.username);
-   localStorage.setItem('token', res.token);
+    try {
+      // Call the sign-in function and pass the username and password
+      const res = await api.loginUser(username, password);
+      login(res.userObject.username);
+      localStorage.setItem('token', res.token);
+      alert('Login successful');
+      setAuthenticated(true);
+      setUsername('');
+      setPassword('');
+    } catch (error) {
+      // Handle the failed sign-in and show an alert
+      alert('Login failed. Please check your credentials and try again.');
+    }
   };
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    // Call the register function and pass the username and password
-    const user = await api.registerUser(username, password);
-    login(user); 
+    try {
+      // Call the register function and pass the username and password
+      await api.registerUser(username, password);
+      alert('Registration successful');
+      setUsername('');
+      setPassword('');
+    } catch (err) {
+      // Handle registration error here
+      console.error('Registration failed:', err);
+      alert('Registration failed. Please try again.');
+    }
   };
+
 
   return (
     <div>

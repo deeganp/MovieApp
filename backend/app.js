@@ -1,6 +1,5 @@
 "use strict";
 
-/** Express app for jobly. */
 
 const express = require("express");
 const cors = require("cors");

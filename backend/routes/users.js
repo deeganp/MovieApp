@@ -32,24 +32,39 @@ router.post('/register', async (req, res) => {
 // Login a user and generate a JWT token
 router.post('/login', async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, password, token } = req.body;
 
-    // Create a new User instance
-    const user = new User(username, password);
+    if (token) {
+      try {
+        const decodedToken = jwt.verify(token, config.SECRET_KEY);
+        const userObject = { username: decodedToken.username };
 
-    // Login the user
-    const loginResult = await user.login();
-
-    if (loginResult) {
-      // Generate a JWT token
-      const token = jwt.sign({ username: user.username }, config.SECRET_KEY);
-
-      const userObject = {username : user.username}
-      
-      res.status(200).json({ token , userObject });
+        return res.status(200).json({ token, userObject });
+      } catch (tokenError) {
+        console.error('Auto Login Failed:', tokenError);
+        return res.status(401).json({ error: 'Auto-login failed. Invalid token.' });
+      }
     } else {
-      console.error('Login failed. incorrect username or passwrd.')
-      res.status(401).json({ error: 'Login failed. Incorrect username or password.' });
+
+      // Create a new User instance
+      const user = new User(username, password);
+
+      // Login the user
+      const loginResult = await user.login();
+
+      if (loginResult) {
+        // Generate a JWT token
+        const token = jwt.sign({ username: user.username }, config.SECRET_KEY, {
+          expiresIn: '15m',
+        });
+
+        const userObject = { username: user.username }
+
+        res.status(200).json({ token, userObject });
+      } else {
+        console.error('Login failed. incorrect username or passwrd.')
+        res.status(401).json({ error: 'Login failed. Incorrect username or password.' });
+      }
     }
   } catch (error) {
     console.error('Login failed:', error);
@@ -104,7 +119,7 @@ router.delete('/favorites/delete', async (req, res) => {
   try {
     // Extract the user's username and movieName from the request body
     const { username, movieName } = req.body;
-    
+
     // Create a new User instance
     const user = new User(username);
 

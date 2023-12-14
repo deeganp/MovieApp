@@ -21,14 +21,19 @@ class MovieAppApi {
     }
   }
 
-  async loginUser(username, password) {
+  async loginUser(username, password, token = null) {
     try {
+      if(token){
+        const res = await axios.post(`${this.apiBase}/users/login`, { token });
+        return res.data;
+      } else {
       // Make a POST request to log in
       const response = await axios.post(`${this.apiBase}/users/login`, {
         username,
         password,
       });
       return response.data; // Return authentication result (e.g., token)
+     }
     } catch (error) {
       throw new Error('Login failed');
     }
@@ -49,10 +54,18 @@ class MovieAppApi {
     }
   }
 
-  async getFavorites(username) {
+  async getFavorites(username, token) {
     try {
+
+       // Create request headers with the JWT in the Authorization header
+       const headers = {
+      'Authorization': `Bearer ${token}`,
+    };
+
       // Make a GET request to retrieve user favorites
-      const response = await axios.get(`${this.apiBase}/users/${username}/favorites`);
+      const response = await axios.get(`${this.apiBase}/users/${username}/favorites`, {
+        headers,
+      });
   
       // Extract favorites from the response
       const { favorites } = response.data;
