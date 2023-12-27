@@ -42,6 +42,7 @@ const Favorites = () => {
       // Refresh the favorites list after deletion
       const updatedFavorites = favorites.filter((fav) => fav !== movieName);
       setFavorites(updatedFavorites);
+      alert(`Deleted ${movieName} from favorites!`);
     } catch (err) {
       setError('Failed to delete favorite');
     }

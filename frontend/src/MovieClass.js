@@ -19,7 +19,7 @@ class Movie {
     try {
       const response = await axios.request(options);
       const results = response.data.results;
-      const titles = results.slice(0, 5).map(result => {
+      const titles = results.slice(0, 10).map(result => {
         const titleObject = result.titleText;
         return titleObject ? titleObject.text : '';
       });

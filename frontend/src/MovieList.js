@@ -19,6 +19,7 @@ const MovieList = ({api, movies }) => {
       // You can fetch the updated favorites here and set them in your state
       const updatedFavorites = await api.getFavorites(username);
       setFavorites(updatedFavorites);
+      alert(`Added ${movieName} to favorites!`);
     } catch (error) {
       // Handle errors, such as when the user is not logged in
       console.error(error);
