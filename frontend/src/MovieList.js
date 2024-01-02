@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from './AuthContext';
 import "./MovieList.css"
 
+
 const MovieList = ({api, movies }) => {
   const [favorites, setFavorites] = useState([]);
   const {user} = useAuth();
