@@ -10,8 +10,6 @@ adding movie details and streaming availibilty, and improving the user log in ex
 My website searches movies from the Movie Database Api, and allows users to sign up, log in, and save movies to their 'favorites'
 which is accesible from the Favorites tab.
 
-There are several tests in the frontend that mock responses to certain requuests that can be ran using jest [test file name].
-
 The standard user flow for the website can be either immediently navigating to the sign up/log in tab to complete that process
 before searching movies and adding them to their favorites, however users can also just search movies without signing in, they just
 can't favorite any movies in this case. 
