@@ -32,7 +32,7 @@ const Favorites = () => {
       fetchFavorites();
     } else {
       // Handle the case when no user is logged in (e.g., redirect to login)
-      history.push('/');
+      history.push('/signin');
       setLoading(false);
     }
   }, [user]);
@@ -46,7 +46,7 @@ const Favorites = () => {
       setFavorites(updatedFavorites);
       addToast(`Deleted ${movieName} from favorites!`,{ appearance: 'success', autoDismiss: true });
     } catch (err) {
-      setError('Failed to delete favorite');
+      console.error('Failed to delete favorite', error);
       addToast(`Failed to delete ${movieName} from favorites, please try again.`, { appearance: 'error', autoDismiss: true })
     }
   };

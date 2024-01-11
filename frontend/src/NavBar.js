@@ -8,7 +8,7 @@ function NavBar() {
     return (
         <div>
             <Navbar expand="md">
-                <NavLink exact to="/" className="navbar-brand">Home</NavLink>
+                <NavLink exact to="/" className="nav-link">Home</NavLink>
                 <Nav className="ml-auto" navbar>
                     <NavItem>
                         <NavLink to="/searchmovies" className="nav-link" activeClassName="active">Search Movies!</NavLink>

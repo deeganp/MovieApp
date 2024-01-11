@@ -23,6 +23,7 @@ const SignInForm = ({ api, error, setAuthenticated  }) => {
       setPassword('');
     } catch (error) {
       // Handle the failed sign-in and show an alert
+      console.error('Log In Failed', error);
       addToast('Login failed. Please check your credentials and try again.',{appearance: 'error', autoDismiss: true});
     }
   };
@@ -35,9 +36,9 @@ const SignInForm = ({ api, error, setAuthenticated  }) => {
       addToast('User registered successfully!' , {appearance: 'success', autoDismiss: true});
       setUsername('');
       setPassword('');
-    } catch (err) {
+    } catch (error) {
       // Handle registration error here
-      console.error('Registration failed:', err);
+      console.error('Registration failed:', error);
       addToast('Registration failed. Please try again.', {appearance: 'error', autoDismiss: true});
     }
   };

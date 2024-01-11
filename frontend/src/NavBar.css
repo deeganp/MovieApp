@@ -6,6 +6,9 @@
     font-size: 18px;
     color: #333;
     transition: color 0.3s, background-color 0.3s;
+    border: 3px solid #007bff; 
+    border-radius: 5px;
+    font-family: 'Limelight', cursive;
   }
   
   /* Style for the navigation links on hover */

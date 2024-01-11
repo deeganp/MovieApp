@@ -25,7 +25,7 @@ const MovieList = ({api, movies }) => {
       addToast(`Added ${movieName} to favorites!`, { appearance: 'success', autoDismiss: true });
     } catch (error) {
       // Handle errors, such as when the user is not logged in
-      console.error(error);
+      console.error('Failed to add favorite', error);
       addToast(`Failed to add ${movieName} to favorites, please try again.`, { appearance: 'error', autoDismiss: true })
     }
   };
