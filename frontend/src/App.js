@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { ToastProvider } from 'react-toast-notifications';
 import jwtDecode from 'jwt-decode';
 
 import './App.css';
@@ -59,6 +60,7 @@ function App() {
   }
 
   return (
+   <ToastProvider>
     <div className="App">
         <header className="App-header">
           <Banner />
@@ -90,7 +92,8 @@ function App() {
           </main>
         </BrowserRouter>
     </div>
-  );
+ </ToastProvider> 
+ );
 }
 
 export default App;

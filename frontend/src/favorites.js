@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import MovieAppApi from './api'; // Import your MovieAppApi class
 import { useAuth } from './AuthContext';
 import { useHistory } from 'react-router-dom';
+import { useToasts } from 'react-toast-notifications';
 import './favorites.css';
 
 const Favorites = () => {
@@ -10,6 +11,7 @@ const Favorites = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const history = useHistory();
+  const { addToast } = useToasts();
 
   useEffect(() => {
     if (user) {
@@ -42,9 +44,10 @@ const Favorites = () => {
       // Refresh the favorites list after deletion
       const updatedFavorites = favorites.filter((fav) => fav !== movieName);
       setFavorites(updatedFavorites);
-      alert(`Deleted ${movieName} from favorites!`);
+      addToast(`Deleted ${movieName} from favorites!`,{ appearance: 'success', autoDismiss: true });
     } catch (err) {
       setError('Failed to delete favorite');
+      addToast(`Failed to delete ${movieName} from favorites, please try again.`, { appearance: 'error', autoDismiss: true })
     }
   };
 
