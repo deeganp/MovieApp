@@ -3,6 +3,7 @@ import MovieAppApi from './api'; // Import your MovieAppApi class
 import { useAuth } from './AuthContext';
 import { useHistory } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
+import NoFavorites from './NoFavorites'
 import './favorites.css';
 
 const Favorites = () => {
@@ -54,14 +55,18 @@ const Favorites = () => {
   return (
     <div>
       <h2>My Favorites</h2>
-      <ul className='fav-list'>
-        {favorites.map((movieName) => (
-          <li key={movieName} className='fav-item'>
-            {movieName}
-            <button className='delete' onClick={() => handleDeleteFavorite(movieName)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      {favorites.length > 0 ? (
+        <ul className='fav-list'>
+          {favorites.map((movieName) => (
+            <li key={movieName} className='fav-item'>
+              {movieName}
+              <button className='delete' onClick={() => handleDeleteFavorite(movieName)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <NoFavorites />
+      )}
     </div>
   );
 };

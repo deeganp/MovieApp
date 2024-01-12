@@ -7,6 +7,16 @@
   flex-wrap: wrap;
   justify-content: center; /* Center items horizontally */
 }
+/* Add these styles to your CSS file */
+.no-favorites {
+  font-size: 25px;
+  font-family: 'Limelight', cursive;
+  color: #555;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 20px;
+}
 
 /* Style individual list items */
 .fav-item {
