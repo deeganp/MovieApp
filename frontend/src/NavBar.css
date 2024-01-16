@@ -1,10 +1,15 @@
 /* Style for the navigation links */
+.navbar-style {
+  background-color:  black; 
+  border: 5px solid #ffd700;
+  font-family: 'Limelight', cursive;
+}
 .nav-link {
     display: inline-block;
     padding: 10px 20px;
     text-decoration: none;
     font-size: 18px;
-    color: #333;
+    color:  #007bff;
     transition: color 0.3s, background-color 0.3s;
     border: 3px solid #007bff; 
     border-radius: 5px;
@@ -23,5 +28,8 @@
     color: #fff;
     background-color: #007bff;
     border-radius: 5px;
+  }
+  .nav-item{
+    padding: 1vh;
   }
   

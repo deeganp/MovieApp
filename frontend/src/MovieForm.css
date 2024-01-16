@@ -1,7 +1,7 @@
-/* MovieForm.css */
-
-/* Form container styles */
-.form-container {
+.movie-form-container{
+  padding: 5vh;
+}
+.movie-form {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
@@ -10,7 +10,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
-  /* Form input styles */
+  
   .form-group {
     width: 100%;
     padding: 10px;
@@ -20,7 +20,7 @@
     margin-bottom: 10px;
   }
   
-  /* Search button styles */
+  
   .btn {
     display: block;
     width: 100%;
@@ -35,6 +35,6 @@
   }
   
   .btn:hover {
-    background-color: #644dbf; /* Purple color on hover */
+    background-color: #644dbf; 
   }
   

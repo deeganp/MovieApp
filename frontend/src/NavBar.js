@@ -7,16 +7,16 @@ import './NavBar.css'
 function NavBar() {
     return (
         <div>
-            <Navbar expand="md">
+            <Navbar expand="md" className="navbar-style">
                 <NavLink exact to="/" className="nav-link">Home</NavLink>
                 <Nav className="ml-auto" navbar>
-                    <NavItem>
+                    <NavItem className="nav-item">
                         <NavLink to="/searchmovies" className="nav-link" activeClassName="active">Search Movies!</NavLink>
                     </NavItem>
-                    <NavItem>
+                    <NavItem className="nav-item">
                         <NavLink to="/signin" className="nav-link" activeClassName="active">Sign In or Register!</NavLink>
                     </NavItem>
-                    <NavItem>
+                    <NavItem className="nav-item">
                         <NavLink to="/favorites" className="nav-link" activeClassName="active">Favorite Movies!</NavLink>
                     </NavItem>
                 </Nav>

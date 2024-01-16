@@ -46,7 +46,7 @@ const SignInForm = ({ api, error, setAuthenticated  }) => {
 
   return (
     <div>
-      <h2 className='title'>Sign In or Register</h2>
+      <p id='title'>Sign In or Register</p>
       <form className='form'>
         <div className="form-group">
           <label htmlFor="username" className='label'>Username</label>

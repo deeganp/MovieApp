@@ -1,14 +1,14 @@
-import React, { useState } from 'react'; 
+import React, { useState } from 'react';
 import { useAuth } from './AuthContext';
 import { useToasts } from 'react-toast-notifications';
 import "./MovieList.css"
 
 
-const MovieList = ({api, movies }) => {
+const MovieList = ({ api, movies }) => {
   const [favorites, setFavorites] = useState([]);
-  const {user} = useAuth();
+  const { user } = useAuth();
   const { addToast } = useToasts();
- 
+
 
   const handleAddFavorite = async (movieName) => {
     try {
@@ -32,18 +32,19 @@ const MovieList = ({api, movies }) => {
 
   return (
     <div className='movie-list-container'>
-    <ul className='movie-list'>
-      {movies.map((movie) => (
-        <li key={movie} className='movie-item'>
-          <span className='movie-name'>{movie} </span>
-          <button className='button-29' onClick={() => handleAddFavorite(movie)}>Favorite</button>
-        </li>
-      ))}
-    </ul>
-  </div>
+      <ul className='movie-list'>
+        {movies.map((movie) => (
+          <li key={movie} className='movie-item'>
+            <div className='movie-details'>
+              <span className='movie-name'>{movie} </span>
+              <button className='button-29' onClick={() => handleAddFavorite(movie)}>Favorite</button>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 
 export default MovieList;
 
-  

@@ -11,22 +11,27 @@
     display: grid;
     gap: 20px;
   }
+  .movie-details{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  }
   .movie-name {
     margin-right: 10px;
+    flex-grow: 1;
   }
   
   .movie-item {
-    background-color: #f9f9f9;
-    color: rgb(29, 165, 29);
+    color: #4287f5;
     border: 1px solid #ddd;
     justify-content: space-between;
     padding: 10px;
     border-radius: 5px;
     transition: transform 0.2s ease-in-out;
     font-weight: bold;
-    font-size: 22px; /* Apply the title font size here */
+    font-size: 22px; 
     margin: 5px 0;
-    max-width: 75% /* Apply the title margin here */
+    max-width: 75% 
   }
   
   .movie-item:hover {

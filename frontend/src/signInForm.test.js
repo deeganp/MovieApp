@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { AuthContextProvider } from './AuthContext'; // Import the AuthContextProvider
 import SignInForm from './signInForm';
+import { ToastProvider } from 'react-toast-notifications';
 
 const mockApi = {
   loginUser: jest.fn().mockResolvedValue({
@@ -15,9 +16,11 @@ const mockApi = {
 describe('SignInForm component', () => {
   it('handles user login', async () => {
     const { getByLabelText, getByText } = render(
-      <AuthContextProvider>
-        <SignInForm api={mockApi} error="" />
-      </AuthContextProvider>
+      <ToastProvider>
+        <AuthContextProvider>
+          <SignInForm api={mockApi} error="" />
+        </AuthContextProvider>
+      </ToastProvider>
     );
 
     const usernameInput = getByLabelText('Username');
@@ -34,9 +37,11 @@ describe('SignInForm component', () => {
 
   it('handles user registration', async () => {
     const { getByLabelText, getByText } = render(
-      <AuthContextProvider>
-        <SignInForm api={mockApi} error="" />
-      </AuthContextProvider>
+      <ToastProvider>
+        <AuthContextProvider>
+          <SignInForm api={mockApi} error="" />
+        </AuthContextProvider>
+      </ToastProvider>
     );
 
     const usernameInput = getByLabelText('Username');

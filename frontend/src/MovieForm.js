@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Movie from './MovieClass';
-import { useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import './MovieForm.css'
 
 const SearchMovie = ({ SetMovies }) => {
@@ -9,28 +9,30 @@ const SearchMovie = ({ SetMovies }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-    const movieData = await Movie.getMovieByTitle(movieName);
-    SetMovies(movieData);
-    
-    history.push('/results');
-    } catch(error) {
-        console.error('Error fetching movie data;', error);
+    try {
+      const movieData = await Movie.getMovieByTitle(movieName);
+      SetMovies(movieData);
+
+      history.push('/results');
+    } catch (error) {
+      console.error('Error fetching movie data;', error);
     }
   };
-  
+
 
   return (
-    <form onSubmit={handleSubmit}  className="form-container">
-      <input
-        type='text'
-        placeholder= 'Search for a movie...'
-        value={movieName}
-        onChange={(e) => setMovieName(e.target.value)}
-        className="form-group"
-      />
-      <button type='submit' className='btn'>Search!</button>
-    </form>
+    <div className='movie-form-container'>
+      <form onSubmit={handleSubmit} className="movie-form">
+        <input
+          type='text'
+          placeholder='Search for a movie...'
+          value={movieName}
+          onChange={(e) => setMovieName(e.target.value)}
+          className="form-group"
+        />
+        <button type='submit' className='btn'>Search!</button>
+      </form>
+    </div>
   );
 };
 

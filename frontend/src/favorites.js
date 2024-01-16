@@ -54,7 +54,7 @@ const Favorites = () => {
 
   return (
     <div>
-      <h2>My Favorites</h2>
+      <p id='fav-page-title'>My Favorites</p>
       {favorites.length > 0 ? (
         <ul className='fav-list'>
           {favorites.map((movieName) => (

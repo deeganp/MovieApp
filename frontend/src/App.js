@@ -15,15 +15,7 @@ import HomeVid from './homeVid';
 import { useAuth } from './AuthContext';
 
 
-function isTokenValid(token) {
-  try {
-    const decodedToken = jwtDecode(token);
-    const currentTime = Date.now() / 1000; // Convert to seconds
-    return decodedToken.exp > currentTime; // Check if the token is not expired
-  } catch (error) {
-    return false;
-  }
-}
+
 
 function App() {
   const api = new MovieAppApi();
@@ -31,6 +23,10 @@ function App() {
 
   const [movies, setMovies] = useState([]);
   const [authenticated, setAuthenticated] = useState(false);
+
+  const handleGetMovies = (movieData) => {
+    setMovies(movieData);
+  };
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -40,10 +36,16 @@ function App() {
       console.log('condition met for auto');
     }
   }, []);
+  function isTokenValid(token) {
+    try {
+      const decodedToken = jwtDecode(token);
+      const currentTime = Date.now() / 1000; // Convert to seconds
+      return decodedToken.exp > currentTime; // Check if the token is not expired
+    } catch (error) {
+      return false;
+    }
+  }
 
-  const handleGetMovies = (movieData) => {
-    setMovies(movieData);
-  };
 
   async function loginUserWithToken(token) {
     try {
@@ -60,40 +62,42 @@ function App() {
   }
 
   return (
-   <ToastProvider>
-    <div className="App">
-        <header className="App-header">
-          <Banner />
-        </header>
-        <BrowserRouter>
-          <NavBar />
-          <main>
-            <Switch>
-              <Route exact path="/">
-                <HomeVid />
-              </Route>
-              <Route exact path="/searchmovies">
-                <SearchMovie SetMovies={handleGetMovies} />
-              </Route>
-              <Route exact path="/results">
-                <MovieList api={api} movies={movies} />
-              </Route>
-              <Route exact path="/signin">
-                <SignInForm setAuthenticated={setAuthenticated} api={api} />
-              </Route>
-              <Route exact path="/favorites">
-                {authenticated ? (
-                  <Favorites api={api} />
-                ) : (
-                  <Redirect to="/signin" />
-                )}
-              </Route>
-            </Switch>
-          </main>
-        </BrowserRouter>
-    </div>
- </ToastProvider> 
- );
+    <ToastProvider>
+      <div className="background-container">
+        <div className="App">
+          <header className="App-header">
+            <Banner />
+          </header>
+          <BrowserRouter>
+            <NavBar />
+            <main>
+              <Switch>
+                <Route exact path="/">
+                  <HomeVid />
+                </Route>
+                <Route exact path="/searchmovies">
+                  <SearchMovie SetMovies={handleGetMovies} />
+                </Route>
+                <Route exact path="/results">
+                  <MovieList api={api} movies={movies} />
+                </Route>
+                <Route exact path="/signin">
+                  <SignInForm setAuthenticated={setAuthenticated} api={api} />
+                </Route>
+                <Route exact path="/favorites">
+                  {authenticated ? (
+                    <Favorites api={api} />
+                  ) : (
+                    <Redirect to="/signin" />
+                  )}
+                </Route>
+              </Switch>
+            </main>
+          </BrowserRouter>
+        </div>
+      </div>
+    </ToastProvider>
+  );
 }
 
 export default App;

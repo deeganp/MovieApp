@@ -1,38 +1,35 @@
-/* Favorites.css */
-
-/* Style the movie list */
 .fav-list {
   list-style: none;
   padding: 0;
   flex-wrap: wrap;
-  justify-content: center; /* Center items horizontally */
+  justify-content: center; 
 }
-/* Add these styles to your CSS file */
+
 .no-favorites {
   font-size: 25px;
   font-family: 'Limelight', cursive;
-  color: #555;
+  color: #4287f5;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   margin-top: 20px;
 }
 
-/* Style individual list items */
+
 .fav-item {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center items horizontally and vertically */
+  align-items: center; 
   padding: 10px;
   margin: 10px;
-  background-color: #f5f5f5;
+  border:5px solid #ffd700;
   border-radius: 5px;
   font-family: Arial, sans-serif;
   font-size: 30px;
-  color: #37b11f;
+  color: #4287f5;
   transition: transform 0.2s ease-in-out;
-  text-align: center; /* Center text within the container */
-  min-width: 200px; /* Set a minimum width for the containers */
+  text-align: center; 
+  min-width: 200px; 
 }
 
 
@@ -67,4 +64,10 @@
   padding: .1em .6em;
   font-weight: bold;  
   border: none;
+  color: white;
+}
+#fav-page-title{
+  font-size: 5vh;
+  color: #ffd700;
+  font-family: 'Limelight', cursive;
 }

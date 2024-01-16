@@ -62,7 +62,7 @@ router.post('/login', async (req, res) => {
 
         res.status(200).json({ token, userObject });
       } else {
-        console.error('Login failed. incorrect username or passwrd.')
+        console.error('Login failed. incorrect username or password.')
         res.status(401).json({ error: 'Login failed. Incorrect username or password.' });
       }
     }

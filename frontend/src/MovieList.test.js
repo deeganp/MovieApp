@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import MovieList from './MovieList';
+import { ToastProvider } from 'react-toast-notifications';
 
 jest.mock('./AuthContext', () => ({
   useAuth: jest.fn(),
@@ -16,7 +17,7 @@ describe('MovieList component', () => {
 
     const movies = ['Movie 1', 'Movie 2'];
 
-    render(<MovieList movies={movies} />);
+    render(<ToastProvider><MovieList movies={movies} /></ToastProvider>);
 
     // Verify that the movies are displayed
     expect(screen.getByText('Movie 1')).toBeInTheDocument();
@@ -42,7 +43,7 @@ describe('MovieList component', () => {
 
     const movies = ['Movie 1', 'Movie 2'];
 
-    render(<MovieList movies={movies} />);
+    render(<ToastProvider><MovieList movies={movies} /></ToastProvider>);
 
     // Find the "Favorite" buttons and click one of them
     const favoriteButton = screen.getByText('Favorite');
