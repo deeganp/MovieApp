@@ -20,8 +20,9 @@ const Favorites = () => {
       const fetchFavorites = async () => {
         try {
           const api = new MovieAppApi();
-          const token = localStorage.getItem('token');
-          const userFavorites = await api.getFavorites(user, token); // Use user.username
+          // const token = localStorage.getItem('token');
+          // const userFavorites = await api.getFavorites(user, token); 
+          const userFavorites = await api.getFavorites(user); 
           setFavorites(userFavorites);
           setLoading(false);
         } catch (err) {

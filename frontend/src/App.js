@@ -12,6 +12,7 @@ import SignInForm from './signInForm';
 import Favorites from './favorites';
 import MovieAppApi from './api';
 import HomeVid from './homeVid';
+import MovieDetailsPage from './MovieDetailsPage';
 import { useAuth } from './AuthContext';
 
 
@@ -80,6 +81,9 @@ function App() {
                 </Route>
                 <Route exact path="/results">
                   <MovieList api={api} movies={movies} />
+                </Route>
+                <Route exact path = "/MovieDetails">
+                  <MovieDetailsPage />
                 </Route>
                 <Route exact path="/signin">
                   <SignInForm setAuthenticated={setAuthenticated} api={api} />

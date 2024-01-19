@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useAuth } from './AuthContext';
+import { useHistory } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
+import Movie from './MovieClass';
 import "./MovieList.css"
 
 
@@ -8,18 +10,17 @@ const MovieList = ({ api, movies }) => {
   const [favorites, setFavorites] = useState([]);
   const { user } = useAuth();
   const { addToast } = useToasts();
+  const history = useHistory();
 
 
   const handleAddFavorite = async (movieName) => {
     try {
-      // Get the username of the currently logged-in user from your authentication context or state
-      const username = user; // Replace with your actual logic to get the username
-
+      // Get the username of the currently logged-in user from your authentication context 
+      const username = user;
       // Call the addFavorite method to add the movie to the user's favorites
       await api.addFavorite(username, movieName);
 
-      // Update the favorites state (if needed) to reflect the changes immediately
-      // You can fetch the updated favorites here and set them in your state
+      // fetch the updated favorites here and set them in state
       const updatedFavorites = await api.getFavorites(username);
       setFavorites(updatedFavorites);
       addToast(`Added ${movieName} to favorites!`, { appearance: 'success', autoDismiss: true });
@@ -30,14 +31,31 @@ const MovieList = ({ api, movies }) => {
     }
   };
 
+
+  const showDetails = async (ID) => {
+    try {
+      history.push({
+        pathname: '/MovieDetails',
+        state: { movieID: ID },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleClick = async (ID) => {
+    await showDetails(ID);
+  };
+
   return (
     <div className='movie-list-container'>
       <ul className='movie-list'>
         {movies.map((movie) => (
-          <li key={movie} className='movie-item'>
+          <li key={movie.imdbID} className='movie-item'>
             <div className='movie-details'>
-              <span className='movie-name'>{movie} </span>
-              <button className='button-29' onClick={() => handleAddFavorite(movie)}>Favorite</button>
+              <span className='movie-name'>{movie.title} </span>
+              <button className='button-29' onClick={() => handleClick(movie.imdbID)}>Details</button>
+              <button className='button-29' onClick={() => handleAddFavorite(movie.title)}>Favorite</button>
             </div>
           </li>
         ))}
