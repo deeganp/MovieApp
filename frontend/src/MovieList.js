@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useAuth } from './AuthContext';
 import { useHistory } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
-import Movie from './MovieClass';
 import "./MovieList.css"
 
 
