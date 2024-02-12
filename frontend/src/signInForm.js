@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from './AuthContext';
 import { useToasts } from 'react-toast-notifications';
 import './signInForm.css'
 
 
-const SignInForm = ({ api, error, setAuthenticated  }) => {
+const SignInForm = ({ api, error, setAuthenticated }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useAuth();
   const { addToast } = useToasts();
+
+  useEffect(() => {
+    addToast(`Please Sign In To View Favorites`, { appearance: 'info', autoDismiss: true });
+  }, [addToast]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -24,7 +28,7 @@ const SignInForm = ({ api, error, setAuthenticated  }) => {
     } catch (error) {
       // Handle the failed sign-in and show an alert
       console.error('Log In Failed', error);
-      addToast('Login failed. Please check your credentials and try again.',{appearance: 'error', autoDismiss: true});
+      addToast('Login failed. Please check your credentials and try again.', { appearance: 'error', autoDismiss: true });
     }
   };
 
@@ -33,13 +37,13 @@ const SignInForm = ({ api, error, setAuthenticated  }) => {
     try {
       // Call the register function and pass the username and password
       await api.registerUser(username, password);
-      addToast('User registered successfully!' , {appearance: 'success', autoDismiss: true});
+      addToast('User registered successfully!', { appearance: 'success', autoDismiss: true });
       setUsername('');
       setPassword('');
     } catch (error) {
       // Handle registration error here
       console.error('Registration failed:', error);
-      addToast('Registration failed. Please try again.', {appearance: 'error', autoDismiss: true});
+      addToast('Registration failed. Please try again.', { appearance: 'error', autoDismiss: true });
     }
   };
 
