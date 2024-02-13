@@ -10,6 +10,7 @@ import SearchMovie from './MovieForm';
 import MovieList from './MovieList';
 import SignInForm from './signInForm';
 import Favorites from './favorites';
+import AboutPage from './AboutPage';
 import MovieAppApi from './api';
 import HomeVid from './homeVid';
 import MovieDetailsPage from './MovieDetailsPage';
@@ -75,6 +76,9 @@ function App() {
               <Switch>
                 <Route exact path="/">
                   <HomeVid />
+                </Route>
+                <Route exact path= '/aboutpage'>
+                   <AboutPage/>
                 </Route>
                 <Route exact path="/searchmovies">
                   <SearchMovie SetMovies={handleGetMovies} />
