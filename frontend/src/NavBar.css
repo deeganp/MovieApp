@@ -1,35 +1,38 @@
 /* Style for the navigation links */
 .navbar-style {
-  background-color:  black; 
+  background-color: black; 
   border: 5px solid #ffd700;
   font-family: 'Limelight', cursive;
 }
-.nav-link {
+
+/* Style for the navigation links and button */
+.nav-link, .nav-link button {
     display: inline-block;
     padding: 10px 20px;
     text-decoration: none;
     font-size: 18px;
-    color:  #007bff;
+    color: #007bff;
     transition: color 0.3s, background-color 0.3s;
     border: 3px solid #007bff; 
     border-radius: 5px;
     font-family: 'Limelight', cursive;
-  }
-  
-  /* Style for the navigation links on hover */
-  .nav-link:hover {
+    background-color: black;
+}
+
+/* Style for the navigation links on hover */
+.nav-link:hover, .nav-link button:hover {
     color: #fff;
     background-color: #007bff;
     border-radius: 5px;
-  }
-  
-  /* Style for the active navigation link */
-  .nav-link.active {
+}
+
+/* Style for the active navigation link and button */
+.nav-link.active, .nav-link button.active {
     color: #fff;
     background-color: #007bff;
     border-radius: 5px;
-  }
-  .nav-item{
+}
+
+.nav-item{
     padding: 1vh;
-  }
-  
+}
