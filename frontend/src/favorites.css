@@ -1,72 +1,63 @@
 .fav-list {
   list-style: none;
   padding: 0;
+  display: flex;
   flex-wrap: wrap;
-  justify-content: center; 
+  justify-content: center;
 }
-
-.no-favorites {
-  font-size: 25px;
-  font-family: 'Limelight', cursive;
-  color: #4287f5;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-top: 20px;
-}
-
 
 .fav-item {
   display: flex;
   flex-direction: column;
-  align-items: center; 
-  padding: 10px;
-  margin: 10px;
-  border:5px solid #ffd700;
-  border-radius: 5px;
+  align-items: center;
+  justify-content: space-between; /* Added to distribute space evenly between movie name and button */
+  padding: 20px; /* Increased padding for better spacing */
+  margin: 20px; /* Increased margin for better spacing */
+  border: 5px solid #ffd700;
+  border-radius: 10px; /* Increased border-radius for rounded corners */
   font-family: Arial, sans-serif;
   font-size: 30px;
   color: #4287f5;
   transition: transform 0.2s ease-in-out;
-  text-align: center; 
-  min-width: 200px; 
+  text-align: center;
+  min-width: 700px; /* Increased minimum width for larger list items */
+  font-family: 'Limelight', cursive;
 }
-
 
 .delete {
-  --c:  #a51510; /* the color*/
-  
-  box-shadow: 0 0 0 .1em inset var(--c); 
+  --c: #a51510;
+  box-shadow: 0 0 0 .1em inset var(--c);
   --_g: linear-gradient(var(--c) 0 0) no-repeat;
-  background: 
-    var(--_g) calc(var(--_p,0%) - 100%) 0%,
-    var(--_g) calc(200% - var(--_p,0%)) 0%,
-    var(--_g) calc(var(--_p,0%) - 100%) 100%,
-    var(--_g) calc(200% - var(--_p,0%)) 100%;
-  background-size: 50.5% calc(var(--_p,0%)/2 + .5%);
+  background:
+    var(--_g) calc(var(--_p, 0%) - 100%) 0%,
+    var(--_g) calc(200% - var(--_p, 0%)) 0%,
+    var(--_g) calc(var(--_p, 0%) - 100%) 100%,
+    var(--_g) calc(200% - var(--_p, 0%)) 100%;
+  background-size: 50.5% calc(var(--_p, 0%)/2 + .5%);
   outline-offset: .1em;
   transition: background-size .4s, background-position 0s .4s;
+  font-family: system-ui, sans-serif;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: .5em 1em; /* Increased padding for better button size */
+  font-weight: bold;
+  border: none;
+  color: white;
+  margin-top: 10px;
 }
+
 .delete:hover {
   --_p: 100%;
   transition: background-position .4s, background-size 0s;
 }
+
 .delete:active {
-  box-shadow: 0 0 9e9q inset #0009; 
+  box-shadow: 0 0 9e9q inset #0009;
   background-color: var(--c);
   color: #fff;
 }
 
-.delete {
-  font-family: system-ui, sans-serif;
-  font-size: 1.5rem;
-  cursor: pointer;
-  padding: .1em .6em;
-  font-weight: bold;  
-  border: none;
-  color: white;
-}
-#fav-page-title{
+#fav-page-title {
   font-size: 5vh;
   color: #ffd700;
   font-family: 'Limelight', cursive;
