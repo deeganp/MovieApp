@@ -14,6 +14,7 @@ const MovieList = ({ api, movies }) => {
 
   const handleAddFavorite = async (movieName) => {
     try {
+      if(user){
       // Get the username of the currently logged-in user from your authentication context 
       const username = user;
       // Call the addFavorite method to add the movie to the user's favorites
@@ -23,27 +24,32 @@ const MovieList = ({ api, movies }) => {
       const updatedFavorites = await api.getFavorites(username);
       setFavorites(updatedFavorites);
       addToast(`Added ${movieName} to favorites!`, { appearance: 'success', autoDismiss: true });
+     }
+     else {
+      addToast(`Please Sign In Before Adding Movies To Favorites`, { appearance: 'error', autoDismiss: true })
+    }
     } catch (error) {
       // Handle errors, such as when the user is not logged in
       console.error('Failed to add favorite', error);
       addToast(`Failed to add ${movieName} to favorites, please try again.`, { appearance: 'error', autoDismiss: true })
+
     }
   };
 
 
-  const showDetails = async (ID) => {
+  const showDetails = async (movie) => {
     try {
       history.push({
         pathname: '/MovieDetails',
-        state: { movieID: ID },
+        state: {movie} ,
       });
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleClick = async (ID) => {
-    await showDetails(ID);
+  const handleClick = async (movie) => {
+    await showDetails(movie);
   };
 
   return (
@@ -53,7 +59,7 @@ const MovieList = ({ api, movies }) => {
           <li key={movie.imdbID} className='movie-item'>
             <div className='movie-details'>
               <span className='movie-name'>{movie.title} </span>
-              <button className='button-29' onClick={() => handleClick(movie.imdbID)}>Details</button>
+              <button className='button-29' onClick={() => handleClick(movie)}>Details</button>
               <button className='button-29' onClick={() => handleAddFavorite(movie.title)}>Favorite</button>
             </div>
           </li>

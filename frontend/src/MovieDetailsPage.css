@@ -1,38 +1,52 @@
 #MovieDetailsContainer {
-    width: 75vh;
-    font-size: 1.5vh;
+    width: 70%;
     margin: 0 auto;
     padding: 20px;
     background-color: #f5f5f5;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-top: 2vh;
-}
-
-.row {
-    margin-bottom: 2vh;
-    width: 70vh;
-}
-
-.col-md-4 img {
+  }
+  
+  .row {
+    margin-bottom: 20px;
+  }
+  
+  .col-md-4 img {
     max-width: 100%;
     height: auto;
-}
-
-.col-md-4 p {
-    margin-top: 2vh;
-}
-
-.col-md-8 h2 {
-    font-size: 3vh;
-}
-
-.col-md-8 p {
-    font-size: 2vh;
-}
-
-.img-fluid custom-image {
+    border-radius: 5px;
+  }
+  
+  .col-md-4 p {
+    margin-top: 10px;
+  }
+  
+  .col-md-8 h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .col-md-8 p {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+  }
+  
+  .custom-image {
     max-width: 100%;
-    /* Adjust as needed */
     height: auto;
-}
+    border-radius: 5px;
+  }
+  
+  .streaming-info {
+    font-size: 1.6rem; /* Adjust the font size if necessary */
+  }
+  
+  .streaming-info div {
+    margin-bottom: 10px;
+    word-wrap: break-word; /* Add space between each service-link pair */
+  }
+  .streaming-info span {
+    text-transform: capitalize;
+  }
+  

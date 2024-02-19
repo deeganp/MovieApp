@@ -46,7 +46,7 @@ function NavBar() {
                         <NavLink to="/favorites" className="nav-link" activeClassName="active">Favorite Movies!</NavLink>
                     </NavItem>
                     <NavItem className="nav-item">
-                        <button onClick={handleLogout} className="nav-link" activeClassName="active">Logout</button>
+                        <button onClick={handleLogout} className="nav-link" >Logout</button>
                     </NavItem>
                 </Nav>
             </Navbar>
