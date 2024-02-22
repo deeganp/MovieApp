@@ -71,16 +71,33 @@ class User {
   }
 
   // Method to insert a favorite movie name into the "favorites" column
-  async addFavoriteMovieName(movieName) {
+  async addFavoriteMovieName(movieName, movieImdbId) {
     try {
-      this.favorites.push(movieName);
-      await this.saveFavoritesToDatabase();
-      return true; // Movie name added to favorites successfully
+      await this.getFavoriteMovieNames();
+      console.log('favs', this.favorites);
+      
+      // Use this.favorites directly as an empty array
+      const parsedFavorites = this.favorites || [];
+      
+      // Add the new favorite movie to the favorites array
+      parsedFavorites.push({ title: movieName, imdbId: movieImdbId });
+      
+      // Convert the favorites array to JSON string
+      const updatedFavorites = JSON.stringify(parsedFavorites);
+      console.log(updatedFavorites);
+      // Update the database to save the updated favorites
+      const queryString = 'UPDATE users SET favorites = favorites || $1 WHERE username = $2';
+      console.log('query', queryString)
+      const values = [updatedFavorites, this.username];
+      await pool.query(queryString, values);
+      
+      return true;
     } catch (error) {
-      console.log(error);
-      throw new Error('Unable to add movie name to favorites');
+        console.log(error);
+        throw new Error('Unable to add movie name to favorites');
     }
-  }
+}
+
 
   // Method to retrieve all favorite movie names
   async getFavoriteMovieNames() {
@@ -112,32 +129,46 @@ class User {
       throw new Error('Unable to fetch favorites from the database');
     }
   }
-  async deleteFavoriteMovieName(movieName) {
+  async deleteFavoriteMovieName(movieName, movieImdbId) {
     try {
-      
-      // Fetch the latest favorites from the database
-      await this.fetchFavoritesFromDatabase();
-      // Find the index of the movieName in the favorites array
-      const index = this.favorites.indexOf(movieName);
-  
-      // If the movieName is found, remove it from the favorites array
-      if (index !== -1) {
-        this.favorites.splice(index, 1);
-  
-        // Update the database to remove the movieName from the user's favorites
-        const queryString = 'UPDATE users SET favorites = $1 WHERE username = $2';
-        const values = [this.favorites, this.username];
-        await pool.query(queryString, values);
-  
-        return true; // Movie name deleted from favorites successfully
-      } else {
-        throw new Error('Movie name not found in favorites.');
-      }
+        // Fetch the latest favorites from the database
+        await this.fetchFavoritesFromDatabase();
+        console.log('Favorites string:', this.favorites);
+        // Parse favorites from JSON string to JavaScript array
+        const parsedFavorites = JSON.parse(this.favorites);
+        console.log('Parsed favorites:', parsedFavorites);
+        console.log(movieName, movieImdbId);
+
+        // Find the index of the movieName in the favorites array
+        const index = parsedFavorites.findIndex(favorite => favorite.title === movieName && favorite.imdbId === movieImdbId);
+        console.log('Index:', index);
+        // If the movieName is found, remove it from the favorites array
+        if (index !== -1) {
+            parsedFavorites.splice(index, 1);
+            const updatedFavorites = JSON.stringify(parsedFavorites);
+
+            // Update the database to remove the movieName from the user's favorites
+            const queryString = 'UPDATE users SET favorites = $1 WHERE username = $2';
+            let values;
+            if (parsedFavorites.length > 0) {
+                values = [updatedFavorites, this.username];
+            } else {
+                values = ['[]', this.username];
+            }
+            console.log('Values:', values);
+            console.log('Query:', queryString);
+            await pool.query(queryString, values);
+
+            return true; // Movie name deleted from favorites successfully
+        } else {
+            throw new Error('Movie name not found in favorites.');
+        }
     } catch (error) {
-      console.log(error);
-      throw new Error('Unable to delete movie name from favorites');
+        console.log(error);
+        throw new Error('Unable to delete movie name from favorites');
     }
-  }
+}
+
   
 
   // Close the database connection when done

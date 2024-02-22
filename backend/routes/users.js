@@ -83,7 +83,7 @@ router.get('/:username/favorites', async (req, res) => {
 
     // Retrieve user favorites
     const favorites = await user.getFavoriteMovieNames();
-
+    console.log(favorites);
     res.status(200).json({ favorites });
   } catch (error) {
     console.log(error);
@@ -95,13 +95,13 @@ router.get('/:username/favorites', async (req, res) => {
 router.post('/favorites/add', async (req, res) => {
   try {
     // Extract the user's username from the JWT token
-    const { username, movieName } = req.body;
+    const { username, movieName, movieImdbId } = req.body;
 
     // Create a new User instance
     const user = new User(username);
 
     // Add the movie to user favorites
-    const addResult = await user.addFavoriteMovieName(movieName);
+    const addResult = await user.addFavoriteMovieName(movieName, movieImdbId);
 
     if (addResult) {
       res.status(201).json({ message: 'Movie added to favorites' });
@@ -118,13 +118,13 @@ router.post('/favorites/add', async (req, res) => {
 router.delete('/favorites/delete', async (req, res) => {
   try {
     // Extract the user's username and movieName from the request body
-    const { username, movieName } = req.body;
+    const { username, movieName, movieImdbId } = req.body;
 
     // Create a new User instance
     const user = new User(username);
 
     // Delete the movie from user favorites
-    const deleteResult = await user.deleteFavoriteMovieName(movieName);
+    const deleteResult = await user.deleteFavoriteMovieName(movieName, movieImdbId);
 
     if (deleteResult) {
       res.status(200).json({ message: 'Movie deleted from favorites' });

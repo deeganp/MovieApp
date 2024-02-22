@@ -39,12 +39,13 @@ class MovieAppApi {
     }
   }
 
-  async addFavorite(username, movieName) {
+  async addFavorite(username, movieName, movieImdbId) {
     try {
       // Make a POST request to add a favorite movie
       const response = await axios.post(`${this.apiBase}/users/favorites/add`, {
         username,
         movieName,
+        movieImdbId
       });
       return response.data; 
       
@@ -54,33 +55,25 @@ class MovieAppApi {
     }
   }
 
-  async getFavorites(username, token) {
+  async getFavorites(username) {
     try {
-
-       // Create request headers with the JWT in the Authorization header
-       const headers = {
-      'Authorization': `Bearer ${token}`,
-    };
-
       // Make a GET request to retrieve user favorites
-      const response = await axios.get(`${this.apiBase}/users/${username}/favorites`, {
-        headers,
-      });
+      const response = await axios.get(`${this.apiBase}/users/${username}/favorites`);
   
       // Extract favorites from the response
       const { favorites } = response.data;
-  
+      console.log(favorites);
       return favorites;
     } catch (error) {
       throw new Error('Failed to retrieve user favorites');
     }
   }
 
-  async deleteFavorite(username, movieName) {
+  async deleteFavorite(username, movieName, movieImdbId) {
     try {
       // Make a DELETE request to delete a favorite movie
       const response = await axios.delete(`${this.apiBase}/users/favorites/delete`, {
-        data: { username, movieName }, // Send username and movieName in the request body
+        data: { username, movieName, movieImdbId }, // Send username and movieName in the request body
       });
       
       return response.data; // Return result (e.g., success message)
