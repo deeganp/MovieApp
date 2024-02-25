@@ -7,14 +7,12 @@ import './MovieDetailsPage.css';
 const MovieDetailsPage = () => {
   const { state } = useLocation();
   const movieInfo = state?.movieInfo;
-  console.log(movieInfo);
   const [movieDetails, setMovieDetails] = useState(movieInfo);
 
   useEffect(() => {
     const fetchMoviePoster = async () => {
       try {
         if (movieInfo) {
-          console.log(movieInfo);
           const poster = await Movie.getMoviePosterById(movieInfo.imdbId); 
           setMovieDetails(prevMovieInfo => ({
             ...prevMovieInfo,

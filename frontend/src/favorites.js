@@ -22,7 +22,6 @@ const Favorites = () => {
         try {
           const api = new MovieAppApi();
           const userFavorites = await api.getFavorites(user);
-          console.log('here', userFavorites);
           setFavorites(userFavorites);
           setLoading(false);
         } catch (err) {
@@ -39,17 +38,13 @@ const Favorites = () => {
     }
   }, [user]);
 
-  useEffect(() => {
-    console.log('here3', favorites);
-  }, [favorites]);
-
   const handleDeleteFavorite = async (movieName, movieImdbId) => {
     try {
       const api = new MovieAppApi();
-      console.log(movieImdbId);
+    
       await api.deleteFavorite(user, movieName, movieImdbId); // Use user.username
       // Refresh the favorites list after deletion
-      const updatedFavorites = favorites.filter((fav) => fav !== movieName);
+      const updatedFavorites = favorites.filter((fav) => fav.imdbId !== movieImdbId);
       setFavorites(updatedFavorites);
       addToast(`Deleted ${movieName} from favorites!`, { appearance: 'success', autoDismiss: true });
     } catch (err) {
@@ -61,10 +56,10 @@ const Favorites = () => {
   const getMovieDetailsByID = async (movieID) => {
 
     try {
-      console.log(movieID);
+      
       const movie = await Movie.getMovieDetailsByID(movieID);
       const movieInfo = movie[0];
-      console.log(movie);
+      
       history.push({
         pathname: '/MovieDetails',
         state: { movieInfo },
@@ -83,8 +78,10 @@ const Favorites = () => {
           {favorites.map((favorite) => (
             <li key={favorite.imdbId} className='fav-item'>
               {favorite.title}
-              <button className='details' onClick={() => getMovieDetailsByID(favorite.imdbId)}>Details</button>
-              <button className='delete' onClick={() => handleDeleteFavorite(favorite.title, favorite.imdbId)}>Delete</button>
+              <div className="button-container">
+                <button className='button-29' onClick={() => getMovieDetailsByID(favorite.imdbId)}>Details</button>
+                <button className='delete' onClick={() => handleDeleteFavorite(favorite.title, favorite.imdbId)}>Delete</button>
+              </div>
             </li>
           ))}
         </ul>

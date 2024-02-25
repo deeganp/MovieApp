@@ -62,7 +62,6 @@ class MovieAppApi {
   
       // Extract favorites from the response
       const { favorites } = response.data;
-      console.log(favorites);
       return favorites;
     } catch (error) {
       throw new Error('Failed to retrieve user favorites');

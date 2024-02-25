@@ -54,9 +54,7 @@ class Movie {
 
     try {
       const response = await axios.request(options);
-      console.log(response);
       const results = response.data.results;
-      console.log(results);
       return results.primaryImage.url;
     } catch (error) {
       console.error(error);

@@ -83,7 +83,7 @@ router.get('/:username/favorites', async (req, res) => {
 
     // Retrieve user favorites
     const favorites = await user.getFavoriteMovieNames();
-    console.log(favorites);
+    
     res.status(200).json({ favorites });
   } catch (error) {
     console.log(error);
