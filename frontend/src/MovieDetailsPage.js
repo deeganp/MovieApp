@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Container, Row, Col } from 'reactstrap';
+import { useAuth } from './AuthContext';
+import { useToasts } from 'react-toast-notifications';
 import Movie from './MovieClass';
+import MovieAppApi from './api';
 import './MovieDetailsPage.css';
 
 const MovieDetailsPage = () => {
+  const { user } = useAuth();
   const { state } = useLocation();
+  const { addToast } = useToasts();
   const movieInfo = state?.movieInfo;
   const [movieDetails, setMovieDetails] = useState(movieInfo);
+  const [favorites, setFavorites] = useState([]);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchMoviePoster = async () => {
       try {
         if (movieInfo) {
-          const poster = await Movie.getMoviePosterById(movieInfo.imdbId); 
+          const poster = await Movie.getMoviePosterById(movieInfo.imdbId);
           setMovieDetails(prevMovieInfo => ({
             ...prevMovieInfo,
             posterURL: poster
@@ -26,6 +34,45 @@ const MovieDetailsPage = () => {
 
     fetchMoviePoster();
   }, [movieInfo]);
+
+  useEffect(() => {
+    if (user) {
+      // Fetch user's favorite movies only if a user is logged in
+      const fetchFavorites = async () => {
+        try {
+          const api = new MovieAppApi();
+          const userFavorites = await api.getFavorites(user);
+          setFavorites(userFavorites);
+          // Check if the movie is already in the favorites
+          const isAlreadyFavorite = userFavorites.some(favorite =>
+            favorite.title === movieInfo.title && favorite.imdbId === movieInfo.imdbId
+          );
+          setIsFavorite(isAlreadyFavorite);
+        } catch (error) {
+          console.error(error)
+          setError('Failed to fetch favorites');
+        }
+      };
+
+      fetchFavorites();
+    }
+  }, [user, movieInfo]);
+
+  const handleAddFavorite = async () => {
+    try {
+      if (!isFavorite){
+      const api = new MovieAppApi();
+      await api.addFavorite(user, movieInfo.title, movieInfo.imdbId);
+      setIsFavorite(true);
+      addToast(`Added ${movieInfo.title} to favorites!`, { appearance: 'success', autoDismiss: true })
+    } else { 
+      addToast(`${movieInfo.title} is already a favorite`, { appearance: 'info', autoDismiss: true })
+   }
+  } catch (err) {
+      addToast(`Failed to add movie to favorites, please try again. `, { appearance: 'error', autoDismiss: true })
+      console.error('Failed to add favorite', err);
+    }
+  };
 
   const {
     title,
@@ -52,6 +99,9 @@ const MovieDetailsPage = () => {
           ) : (
             <h2>No poster found</h2>
           )}
+           {user && (
+            <button className = 'button-29'onClick={handleAddFavorite}>Add to Favorites</button>
+          )}
         </Col>
         <Col md={8}>
           <h2>{title || 'No Title'}</h2>
@@ -61,7 +111,7 @@ const MovieDetailsPage = () => {
           <p><strong>Directors:</strong> {directors?.join(', ') || 'No directors'}</p>
           <p><strong>Cast:</strong> {cast?.join(', ') || 'No cast'}</p>
           <p><strong>IMDb ID:</strong> {imdbId || 'No IMDb ID'}</p>
-          <p className="streaming-info">
+          <div className="streaming-info">
             <strong>Streaming Info:</strong>
             {streamingInfo?.length > 0 ? (
               streamingInfo.map(info => (
@@ -72,7 +122,7 @@ const MovieDetailsPage = () => {
             ) : (
               <span>No streaming info available</span>
             )}
-          </p>
+          </div>
         </Col>
       </Row>
     </Container>
