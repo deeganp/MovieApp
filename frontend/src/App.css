@@ -5,21 +5,11 @@
   overflow-y: auto;
 }
 
-.App-header {
-  background-color: black;
-  min-height: 30vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
 .background-container {
   background-color: black; 
   min-height: 100vh; 
+} 
+
+.App-header {
+  background-color: black;
 }

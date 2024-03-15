@@ -49,32 +49,40 @@ const SignInForm = ({ api, error, setAuthenticated }) => {
 
 
   return (
-    <div>
-      <p id='title'>Sign In or Register</p>
-      <form className='form'>
-        <div className="form-group">
-          <label htmlFor="username" className='label'>Username</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className='input'
-          />
+    <div className="container px-5">
+      <div className="row gx-5 align-items-center justify-content-center">
+        <div className="col-lg-6">
+          <div className="mb-5 mb-lg-0 text-center">
+            <p className="display-4 lh-1 mb-3">Sign In or Register</p>
+            <form className="form">
+              <div className="form-group">
+                <label htmlFor="username" className='label'>Username</label>
+                <input
+                  type="text"
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className='input form-control'
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password" className='label'>Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className='input form-control'
+                />
+              </div>
+              <div className="form-group">
+                <button onClick={handleLogin} className='custom-btn'>Sign In</button> 
+                <button onClick={handleRegister} className='custom-btn'>Register</button>
+              </div>
+            </form>
+          </div>
         </div>
-        <div className="form-group">
-          <label htmlFor="password" className='label'>Password</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className='input'
-          />
-        </div>
-        <button onClick={handleLogin} className='button'>Sign In</button>
-        <button onClick={handleRegister} className='button'>Register</button>
-      </form>
+      </div>
     </div>
   );
 };

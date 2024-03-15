@@ -1,4 +1,4 @@
-#MovieDetailsContainer {
+ #MovieDetailsContainer {
     width: 70%;
     margin: 0 auto;
     padding: 20px;
@@ -39,14 +39,13 @@
   }
   
   .streaming-info {
-    font-size: 1.6rem; /* Adjust the font size if necessary */
+    font-size: 1.6rem; 
   }
   
   .streaming-info div {
     margin-bottom: 10px;
-    word-wrap: break-word; /* Add space between each service-link pair */
+    word-wrap: break-word; 
   }
   .streaming-info span {
     text-transform: capitalize;
   }
-  
