@@ -60,15 +60,15 @@ const MovieDetailsPage = () => {
 
   const handleAddFavorite = async () => {
     try {
-      if (!isFavorite){
-      const api = new MovieAppApi();
-      await api.addFavorite(user, movieInfo.title, movieInfo.imdbId);
-      setIsFavorite(true);
-      addToast(`Added ${movieInfo.title} to favorites!`, { appearance: 'success', autoDismiss: true })
-    } else { 
-      addToast(`${movieInfo.title} is already a favorite`, { appearance: 'info', autoDismiss: true })
-   }
-  } catch (err) {
+      if (!isFavorite) {
+        const api = new MovieAppApi();
+        await api.addFavorite(user, movieInfo.title, movieInfo.imdbId);
+        setIsFavorite(true);
+        addToast(`Added ${movieInfo.title} to favorites!`, { appearance: 'success', autoDismiss: true })
+      } else {
+        addToast(`${movieInfo.title} is already a favorite`, { appearance: 'info', autoDismiss: true })
+      }
+    } catch (err) {
       addToast(`Failed to add movie to favorites, please try again. `, { appearance: 'error', autoDismiss: true })
       console.error('Failed to add favorite', err);
     }
@@ -99,8 +99,8 @@ const MovieDetailsPage = () => {
           ) : (
             <h2>No poster found</h2>
           )}
-           {user && (
-            <button className = 'button-29'onClick={handleAddFavorite}>Add to Favorites</button>
+          {user && (
+            <button className='button-29' onClick={handleAddFavorite}>Add to Favorites</button>
           )}
         </Col>
         <Col md={8}>
@@ -116,7 +116,8 @@ const MovieDetailsPage = () => {
             {streamingInfo?.length > 0 ? (
               streamingInfo.map(info => (
                 <div key={`${info.service}-${info.link}`}>
-                  <strong style={{ textTransform: 'capitalize' }}>{info.service}:</strong> {info.link}
+                  <strong style={{ textTransform: 'capitalize' }}>{info.service}:</strong> {' '}
+                  <a href={info.link} target="_blank" rel="noopener noreferrer">{info.link}</a>
                 </div>
               ))
             ) : (
