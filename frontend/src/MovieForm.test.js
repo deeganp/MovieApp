@@ -1,64 +1,54 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import SearchMovie from './SearchMovie';
-import Movie from './MovieClass';
+import { render, fireEvent, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import MovieForm from './MovieForm';
 
-jest.mock('./MovieClass'); // Mock the MovieClass module
+// Mock dependencies
+jest.mock('react-router-dom', () => ({
+  useHistory: jest.fn(() => ({
+    push: jest.fn(),
+  })),
+}));
+jest.mock('react-toast-notifications', () => ({
+  useToasts: jest.fn(() => ({
+    addToast: jest.fn(),
+  })),
+}));
+jest.mock('./MovieClass', () => ({
+  getMovieByTitle: jest.fn(() => Promise.resolve([])),
+}));
 
-describe('SearchMovie component', () => {
-  it('fetches and displays movie data on form submission', async () => {
-    // Mock the getMovieByTitle function to return mock movie data
-    Movie.getMovieByTitle.mockResolvedValue({ title: 'Test Movie' });
-
-    const setMoviesMock = jest.fn();
-
-    render(<SearchMovie SetMovies={setMoviesMock} />);
-
-    // Find the input field and enter a movie name
-    const inputElement = screen.getByPlaceholderText('Search for a movie...');
-    fireEvent.change(inputElement, { target: { value: 'Test Movie' } });
-
-    // Find the submit button and click it
-    const submitButton = screen.getByText('Search!');
-    fireEvent.click(submitButton);
-
-    // Verify that Movie.getMovieByTitle was called with the correct movie name
-    await waitFor(() => {
-      expect(Movie.getMovieByTitle).toHaveBeenCalledWith('Test Movie');
-    });
-
-    // Verify that setMoviesMock was called with the movie data
-    expect(setMoviesMock).toHaveBeenCalledWith({ title: 'Test Movie' });
-
-    // Verify that the history.push function was called with the correct route
-    expect(historyMock.push).toHaveBeenCalledWith('/results');
+describe('MovieForm', () => {
+  it('should render search input and button', () => {
+    const { getByPlaceholderText, getByText } = render(<MovieForm />);
+    expect(getByPlaceholderText('Search for a movie...')).toBeInTheDocument();
+    expect(getByText('Search!')).toBeInTheDocument();
   });
 
-  it('handles errors when fetching movie data', async () => {
-    // Mock the getMovieByTitle function to throw an error
-    Movie.getMovieByTitle.mockRejectedValue(new Error('Movie not found'));
+  it('should call handleSubmit when form is submitted', async () => {
+    const { getByPlaceholderText, getByText } = render(<MovieForm />);
+    const input = getByPlaceholderText('Search for a movie...');
+    const button = getByText('Search!');
 
-    const setMoviesMock = jest.fn();
+    fireEvent.change(input, { target: { value: 'Harry Potter' } });
+    fireEvent.click(button);
 
-    render(<SearchMovie SetMovies={setMoviesMock} />);
-
-    // Find the input field and enter a movie name
-    const inputElement = screen.getByPlaceholderText('Search for a movie...');
-    fireEvent.change(inputElement, { target: { value: 'Non-Existent Movie' } });
-
-    // Find the submit button and click it
-    const submitButton = screen.getByText('Search!');
-    fireEvent.click(submitButton);
-
-    // Verify that Movie.getMovieByTitle was called with the correct movie name
     await waitFor(() => {
-      expect(Movie.getMovieByTitle).toHaveBeenCalledWith('Non-Existent Movie');
+      expect(input.value).toBe('Harry Potter');
+      expect(button).toBeDisabled();
     });
-
-    // Verify that setMoviesMock was not called (due to the error)
-    expect(setMoviesMock).not.toHaveBeenCalled();
-
-    // Verify that the error message is displayed
-    expect(screen.getByText('Error fetching movie data;')).toBeInTheDocument();
   });
+
+  it('should show warning toast if search input is empty', async () => {
+    const { getByText } = render(<MovieForm />);
+    const button = getByText('Search!');
+
+    fireEvent.click(button);
+
+    await waitFor(() => {
+      expect(getByText('Please enter a movie name')).toBeInTheDocument();
+    });
+  });
+
+  // Add more test cases as needed
 });

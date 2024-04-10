@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('../config'); // Import your configuration file
 const User = require('../models/user'); // Import the User class
-const { ensureLoggedIn, authenticateJWT } = require('../middleware/auth');
 
 const router = express.Router();
 
