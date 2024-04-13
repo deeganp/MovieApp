@@ -16,6 +16,7 @@ const SignInForm = ({ api, error, setAuthenticated }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    addToast(`Signing In...`, { appearance: 'info', autoDismiss: true });
     try {
       // Call the sign-in function and pass the username and password
       const res = await api.loginUser(username, password);
