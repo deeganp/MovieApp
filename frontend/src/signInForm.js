@@ -35,6 +35,7 @@ const SignInForm = ({ api, error, setAuthenticated }) => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    addToast(`Creating Account...`, { appearance: 'info', autoDismiss: true });
     try {
       // Call the register function and pass the username and password
       await api.registerUser(username, password);
