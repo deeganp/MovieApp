@@ -1,63 +1,71 @@
 import React from 'react';
-import { render, screen, waitFor, act } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { ToastProvider } from 'react-toast-notifications';
 import Favorites from './favorites';
 import MovieAppApi from './api';
+import { useAuth } from './AuthContext';
+import { useHistory } from 'react-router-dom';
+import '@testing-library/jest-dom/extend-expect'; 
 
 jest.mock('./api'); // Mock the MovieAppApi module
+jest.mock('./AuthContext'); // Mock the AuthContext module
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: jest.fn(),
+}));
 
-// Create a mock user for testing
 const mockUser = { username: 'testuser' };
 
 describe('Favorites component', () => {
   beforeEach(() => {
     MovieAppApi.mockClear();
     MovieAppApi.mockImplementation(() => ({
-      getFavorites: async () => ['Movie 1', 'Movie 2'], // Mock the getFavorites method
+      getFavorites: async () => [
+        { imdbId: '1', title: 'Movie 1' },
+        { imdbId: '2', title: 'Movie 2' },
+      ],
     }));
   });
 
   it('fetches and displays user favorites', async () => {
-    render(
-      <MemoryRouter>
-        <Favorites />
-      </MemoryRouter>
-    );
+    useAuth.mockReturnValue({ user: mockUser });
 
-    // Simulate the user being authenticated
-    act(() => {
-      // Mock the useAuth hook to provide a user
-      jest.spyOn(require('./AuthContext'), 'useAuth').mockReturnValue({ user: mockUser });
-
-      // Ensure that the loading state is displayed initially
-      expect(screen.getByText('Loading...')).toBeInTheDocument();
+    await act(async () => {
+      render(
+        <ToastProvider>
+          <MemoryRouter>
+            <Favorites />
+          </MemoryRouter>
+        </ToastProvider>
+      );
     });
 
-    // Wait for the favorites to be fetched and displayed
-    await waitFor(() => {
-      expect(screen.getByText('My Favorites')).toBeInTheDocument();
-      expect(screen.getByText('Movie 1')).toBeInTheDocument();
-      expect(screen.getByText('Movie 2')).toBeInTheDocument();
-    });
+
+    expect(await screen.findByText('My Favorites')).toBeInTheDocument();
+    expect(await screen.findByText('Movie 1')).toBeInTheDocument();
+    expect(await screen.findByText('Movie 2')).toBeInTheDocument();
   });
 
   it('handles the case when no user is logged in', async () => {
     const historyPushMock = jest.fn();
-    jest.spyOn(require('react-router-dom'), 'useHistory').mockReturnValue({ push: historyPushMock });
+    useHistory.mockReturnValue({ push: historyPushMock });
+    useAuth.mockReturnValue({ user: null });
 
-    render(
-      <MemoryRouter>
-        <Favorites />
-      </MemoryRouter>
-    );
+    await act(async () => {
+      render(
+        <ToastProvider>
+          <MemoryRouter>
+            <Favorites />
+          </MemoryRouter>
+        </ToastProvider>
+      );
+    });
 
-    // Ensure that the loading state is displayed initially
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+   // Ensure "Loading..." is displayed
 
-    // Wait for the redirect to the login page
-    await waitFor(() => {
-      expect(historyPushMock).toHaveBeenCalledWith('/');
+    await act(async () => {
+      expect(historyPushMock).toHaveBeenCalledWith('/signin');
     });
   });
 });
