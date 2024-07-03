@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import MovieList from './MovieList';
+import '@testing-library/jest-dom/extend-expect'; 
 
 // Mock the AuthContext module
 jest.mock('./AuthContext', () => ({
