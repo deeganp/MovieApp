@@ -15,6 +15,7 @@ import MovieAppApi from './api';
 import HomeVid from './homeVid';
 import MovieDetailsPage from './MovieDetailsPage';
 import { useAuth } from './AuthContext';
+import tokenLogin from './tokenLogin';
 
 
 
@@ -33,35 +34,12 @@ function App() {
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
 
-    if (storedToken && isTokenValid(storedToken)) {
-      loginUserWithToken(storedToken);
+    if (storedToken && tokenLogin.isTokenValid(storedToken)) {
+      tokenLogin.loginUserWithToken(storedToken, login, setAuthenticated);
       console.log('condition met for auto');
     }
   }, []);
-  function isTokenValid(token) {
-    try {
-      const decodedToken = jwtDecode(token);
-      const currentTime = Date.now() / 1000; // Convert to seconds
-      return decodedToken.exp > currentTime; // Check if the token is not expired
-    } catch (error) {
-      return false;
-    }
-  }
 
-
-  async function loginUserWithToken(token) {
-    try {
-      const response = await api.loginUser(null, null, token);
-      login(response.userObject.username);
-      // Assuming your loginUser method returns the user's data upon successful login
-      setAuthenticated(true);
-      console.log('Auto login successful!', response);
-    } catch (error) {
-      console.error('Auto login failed', error);
-      // Handle auto login failure, e.g., remove the token from localStorage
-      localStorage.removeItem('token');
-    }
-  }
 
   return (
     <ToastProvider>
