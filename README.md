@@ -1,4 +1,4 @@
-The title of my project is Movie EXP. and the link to where it is deployed is https://movie-exp.surge.sh/.
+The title of my project is Movie EXP. and the link to where it is deployed is https://capstone-movie-exp.vercel.app/.
 PLEASE NOTE: The free instance of Render I am using spins down after some time being inactive, initial requests may be slow, 
 in addition, on first time to the site, you will have to do a register followed by a sign in, as of right now, register does not also sign you in.
 
